@@ -12,9 +12,9 @@ services:
     ports:
       - "8002:80"
 
-  patuid_db:
+  patuhid_db:
     image: mariadb:latest
-    container_name: patuid_db
+    container_name: patuhid_db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: w0wk3r3n
