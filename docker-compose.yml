@@ -1,0 +1,36 @@
+
+
+services:
+  patuhid_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: patuhid_app
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - patuhid_net
+    ports:
+      - "8002:80"
+
+  patuid_db:
+    image: mariadb:latest
+    container_name: patuid_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: w0wk3r3n
+      MYSQL_DATABASE: patuhid
+      MYSQL_USER: patuhid_user
+      MYSQL_PASSWORD: AkuSayangKamu1#!
+
+    volumes:
+      - ./database:/var/lib/mysql
+    networks:
+      - patuhid_net
+    ports:
+      - "3302:3306"
+
+networks:
+  patuhid_net:
+    driver: bridge
