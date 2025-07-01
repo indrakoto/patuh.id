@@ -1,5 +1,3 @@
-
-
 services:
   patuhid_app:
     build:
@@ -23,13 +21,15 @@ services:
       MYSQL_DATABASE: patuhid
       MYSQL_USER: patuhid_user
       MYSQL_PASSWORD: AkuSayangKamu1#!
-
     volumes:
-      - ./database:/var/lib/mysql
+      - dbdata:/var/lib/mysql
     networks:
       - patuhid_net
     ports:
       - "3302:3306"
+
+volumes:
+  dbdata:
 
 networks:
   patuhid_net:
