@@ -1,6 +1,6 @@
 FROM php:8.3-apache
 
-# Install dependencies dan ekstensi PHP yang dibutuhkan Laravel, termasuk gd
+# Install dependencies dan ekstensi PHP yang dibutuhkan Laravel, termasuk gd dan intl
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
@@ -12,8 +12,10 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libwebp-dev \
+    libicu-dev \
  && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
- && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+ && docker-php-ext-configure intl \
+ && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd intl
 
 # Enable mod_rewrite Apache untuk Laravel routing
 RUN a2enmod rewrite
