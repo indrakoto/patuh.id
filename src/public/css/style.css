@@ -1,0 +1,68 @@
+    /* Hilangkan border kiri kanan */
+    /*.list-group-item {
+        border-left: 0 !important;
+        border-right: 0 !important;
+        border-radius: 0 !important; 
+    }
+
+    
+    .list-group {
+        border-radius: 0 !important; 
+    }*/
+
+    /* Styling active */
+    .active-institusi {
+        background-color: #284173;
+        color: white;
+        position: relative;
+    }
+    .active-institusi::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 8px;
+        height: 100%;
+        background-color: #fbc02d;
+    }
+
+    /* Styling active */
+    .active-analisis {
+        background-color: #3154a0;
+        color: white;
+        position: relative;
+    }
+    .active-analisis::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 10px;
+        height: 100%;
+        background-color: #fbc02d;
+    }
+
+    .menu-item {
+        border-radius: 0 !important;
+        border: 1px solid #921e81;
+        padding: 15px;
+    }
+
+    .menu-item + .menu-item {
+        border: 1px solid #dee2e6; /* Menambahkan border atas */
+    }
+
+    /* Menghilangkan margin atas pada item pertama */
+    .list-group:first-child .menu-item {
+        margin-top: 0;
+    }
+
+    /* Menghilangkan margin bawah pada item terakhir */
+    .list-group:last-child .menu-item {
+        margin-bottom: 25px;
+    }
+
+    .carousel-item img {
+        height: 355px;
+        object-fit: cover;
+    }
