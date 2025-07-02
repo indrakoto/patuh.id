@@ -18,8 +18,8 @@ class EnsureUserIsActive
     {
         if (Auth::check() && !Auth::user()->is_active) {
             Auth::logout();
-            return redirect()->route('filament.auth.login')
-                ->withErrors(['email' => 'Akun Anda tidak aktif.']);
+            return redirect('/officer')
+                ->with('notification_error', 'Akun Anda tidak aktif.');
         }
 
         return $next($request);

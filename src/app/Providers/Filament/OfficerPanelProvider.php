@@ -21,6 +21,7 @@ use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Blade;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\EnsureUserIsActive;
 
 class OfficerPanelProvider extends PanelProvider
 {
@@ -60,6 +61,7 @@ class OfficerPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                EnsureUserIsActive::class
             ])
             ->authMiddleware([
                 Authenticate::class,
