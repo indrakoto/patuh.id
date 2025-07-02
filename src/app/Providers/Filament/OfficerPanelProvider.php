@@ -19,6 +19,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Blade;
+use Filament\Facades\Filament;
+use Illuminate\Support\Facades\Auth;
 
 class OfficerPanelProvider extends PanelProvider
 {
@@ -75,5 +77,30 @@ class OfficerPanelProvider extends PanelProvider
                     'text' => 'Ke Beranda',
                 ]);
             });
+    }
+
+
+    public function boot(): void
+    {
+        Filament::serving(function () {
+            Filament::registerPanel(function () {
+                return Panel::make()
+                    ->authGuard('web')
+                    ->login()
+                    ->authenticateUsing(function ($request): ?\Illuminate\Contracts\Auth\Authenticatable {
+                        $user = \App\Models\User::where('email', $request->email)->first();
+
+                        if (
+                            $user &&
+                            \Illuminate\Support\Facades\Hash::check($request->password, $user->password) &&
+                            $user->is_active
+                        ) {
+                            return $user;
+                        }
+
+                        return null;
+                    });
+            });
+        });
     }
 }
