@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b10697b45fe4a086f6982a8e9998fea8",
+    "content-hash": "e2f1bc0264fc5cd512d8de49a8ad76b5",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -350,6 +350,77 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "codewithdennis/filament-select-tree",
+            "version": "v3.1.57",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CodeWithDennis/filament-select-tree.git",
+                "reference": "86a0762a7da77cf39b7ac41c2b448702a3d4b4db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CodeWithDennis/filament-select-tree/zipball/86a0762a7da77cf39b7ac41c2b448702a3d4b4db",
+                "reference": "86a0762a7da77cf39b7ac41c2b448702a3d4b4db",
+                "shasum": ""
+            },
+            "require": {
+                "filament/forms": "^3.0",
+                "illuminate/contracts": "^10.0|^11.0|^12.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^7.9",
+                "orchestra/testbench": "^8.0|^9.0|^10.0",
+                "pestphp/pest": "^2.0|^3.7",
+                "pestphp/pest-plugin-arch": "^2.0|^3.0",
+                "pestphp/pest-plugin-laravel": "^2.0|^3.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CodeWithDennis\\FilamentSelectTree\\FilamentSelectTreeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CodeWithDennis\\FilamentSelectTree\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CodeWithDennis",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The multi-level select field enables you to make single selections from a predefined list of options that are organized into multiple levels or depths.",
+            "homepage": "https://github.com/codewithdennis/filament-select-tree",
+            "keywords": [
+                "CodeWithDennis",
+                "filament",
+                "filament-select-tree",
+                "laravel",
+                "tree"
+            ],
+            "support": {
+                "issues": "https://github.com/codewithdennis/filament-select-tree/issues",
+                "source": "https://github.com/codewithdennis/filament-select-tree"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/CodeWithDennis",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-06-09T08:23:31+00:00"
         },
         {
             "name": "danharrin/date-format-converter",
@@ -3211,6 +3282,80 @@
             "time": "2024-03-31T07:05:07+00:00"
         },
         {
+            "name": "michaeld555/filament-croppie",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michaeld555/filament-croppie.git",
+                "reference": "e095458d7393238620d2436fd29cdc649eb08988"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michaeld555/filament-croppie/zipball/e095458d7393238620d2436fd29cdc649eb08988",
+                "reference": "e095458d7393238620d2436fd29cdc649eb08988",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.2",
+                "filament/forms": "^3.0",
+                "league/commonmark": "^2.4",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.0.1",
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^7.9",
+                "orchestra/testbench": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Croppie": "Michaeld555\\FilamentCroppie\\Facades\\FilamentCroppie"
+                    },
+                    "providers": [
+                        "Michaeld555\\FilamentCroppie\\FilamentCroppieServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Michaeld555\\FilamentCroppie\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Douglas",
+                    "email": "usermich999@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Croppie Js Implementation Field for Filament forms",
+            "homepage": "https://github.com/michaeld555/filament-croppie",
+            "keywords": [
+                "cropperjs",
+                "croppie",
+                "croppie-image",
+                "croppie-image-resize",
+                "croppie-js",
+                "field",
+                "filament",
+                "image",
+                "image-resize",
+                "michaeld555"
+            ],
+            "support": {
+                "issues": "https://github.com/michaeld555/filament-croppie/issues",
+                "source": "https://github.com/michaeld555/filament-croppie/tree/v1.0.4"
+            },
+            "time": "2025-03-20T23:38:32+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "3.9.0",
             "source": {
@@ -3713,16 +3858,16 @@
         },
         {
             "name": "openspout/openspout",
-            "version": "v4.28.5",
+            "version": "v4.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/openspout/openspout.git",
-                "reference": "ab05a09fe6fce57c90338f83280648a9786ce36b"
+                "reference": "df9b0f4d229c37c3caa5a9252a6ad8a94efb0fb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/openspout/openspout/zipball/ab05a09fe6fce57c90338f83280648a9786ce36b",
-                "reference": "ab05a09fe6fce57c90338f83280648a9786ce36b",
+                "url": "https://api.github.com/repos/openspout/openspout/zipball/df9b0f4d229c37c3caa5a9252a6ad8a94efb0fb5",
+                "reference": "df9b0f4d229c37c3caa5a9252a6ad8a94efb0fb5",
                 "shasum": ""
             },
             "require": {
@@ -3732,17 +3877,17 @@
                 "ext-libxml": "*",
                 "ext-xmlreader": "*",
                 "ext-zip": "*",
-                "php": "~8.2.0 || ~8.3.0 || ~8.4.0"
+                "php": "~8.3.0 || ~8.4.0"
             },
             "require-dev": {
                 "ext-zlib": "*",
-                "friendsofphp/php-cs-fixer": "^3.68.3",
-                "infection/infection": "^0.29.10",
-                "phpbench/phpbench": "^1.4.0",
-                "phpstan/phpstan": "^2.1.2",
-                "phpstan/phpstan-phpunit": "^2.0.4",
-                "phpstan/phpstan-strict-rules": "^2",
-                "phpunit/phpunit": "^11.5.4"
+                "friendsofphp/php-cs-fixer": "^3.75.0",
+                "infection/infection": "^0.29.14",
+                "phpbench/phpbench": "^1.4.1",
+                "phpstan/phpstan": "^2.1.16",
+                "phpstan/phpstan-phpunit": "^2.0.6",
+                "phpstan/phpstan-strict-rules": "^2.0.4",
+                "phpunit/phpunit": "^12.1.5"
             },
             "suggest": {
                 "ext-iconv": "To handle non UTF-8 CSV files (if \"php-mbstring\" is not already installed or is too limited)",
@@ -3790,7 +3935,7 @@
             ],
             "support": {
                 "issues": "https://github.com/openspout/openspout/issues",
-                "source": "https://github.com/openspout/openspout/tree/v4.28.5"
+                "source": "https://github.com/openspout/openspout/tree/v4.30.0"
             },
             "funding": [
                 {
@@ -3802,7 +3947,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-30T13:51:11+00:00"
+            "time": "2025-05-20T12:33:06+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -7234,6 +7379,142 @@
             "time": "2024-12-21T16:25:41+00:00"
         },
         {
+            "name": "tomatophp/console-helpers",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tomatophp/console-helpers.git",
+                "reference": "69dd818a2bfa7d038467fb526be6c9b573d36a34"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tomatophp/console-helpers/zipball/69dd818a2bfa7d038467fb526be6c9b573d36a34",
+                "reference": "69dd818a2bfa7d038467fb526be6c9b573d36a34",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TomatoPHP\\ConsoleHelpers\\ConsoleHelpersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TomatoPHP\\ConsoleHelpers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fady Mondy",
+                    "email": "EngFadyMondy@gmail.com"
+                }
+            ],
+            "description": "tons of helper you need for you artisan command line application",
+            "keywords": [
+                "application",
+                "artisan",
+                "command",
+                "console",
+                "helpers",
+                "line"
+            ],
+            "support": {
+                "issues": "https://github.com/tomatophp/console-helpers/issues",
+                "source": "https://github.com/tomatophp/console-helpers/tree/v1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/3x1io",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-02-12T12:00:38+00:00"
+        },
+        {
+            "name": "tomatophp/filament-users",
+            "version": "2.0.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tomatophp/filament-users.git",
+                "reference": "6b898f251f2e1c7563362fa5f9b46eaa8e6eee9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tomatophp/filament-users/zipball/6b898f251f2e1c7563362fa5f9b46eaa8e6eee9c",
+                "reference": "6b898f251f2e1c7563362fa5f9b46eaa8e6eee9c",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.3",
+                "php": "^8.2|^8.3|^8.4",
+                "tomatophp/console-helpers": "^1.1"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.21",
+                "livewire/livewire": "^2.10|^3.0",
+                "nunomaduro/larastan": "^3.1",
+                "orchestra/testbench": "^10.0",
+                "pestphp/pest": "^3.7",
+                "pestphp/pest-plugin-laravel": "^3.1",
+                "pestphp/pest-plugin-livewire": "^3.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TomatoPHP\\FilamentUsers\\FilamentUsersServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TomatoPHP\\FilamentUsers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fady Mondy",
+                    "email": "info@3x1.io"
+                }
+            ],
+            "description": "Manage your users with a highly customizable user resource for FilamentPHP with integration of filament-shield and filament-impersonate",
+            "keywords": [
+                "User management",
+                "Users",
+                "filament-impersonate",
+                "filament-shield",
+                "filamentphp",
+                "laravel",
+                "php",
+                "user CRUD",
+                "user resource"
+            ],
+            "support": {
+                "issues": "https://github.com/tomatophp/filament-users/issues",
+                "source": "https://github.com/tomatophp/filament-users/tree/v2.0.19"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/3x1io",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-24T11:58:26+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.6.2",
             "source": {
@@ -9763,12 +10044,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
