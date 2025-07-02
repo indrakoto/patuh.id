@@ -47,6 +47,19 @@ return [
             'report' => false,
         ],
 
+        'private_uploads' => [
+            'driver' => 'local',
+            'root' => storage_path('app/documents'),
+            'visibility' => 'private',
+        ],
+
+        'thumbnails_doc' => [
+            'driver' => 'local',
+            'root' => public_path('document/thumbnails'),
+            'url' => env('APP_URL') . '/document/thumbnails',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
