@@ -28,6 +28,9 @@ RUN apt-get update && apt-get install -y \
     zip \
     opcache
 
+# Install nano dan vim
+RUN apt-get install -y nano vim && rm -rf /var/lib/apt/lists/*
+
 # Enable mod_rewrite Apache yang dibutuhkan Laravel routing
 RUN a2enmod rewrite
 
