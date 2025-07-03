@@ -20,7 +20,7 @@ class MenuResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
     protected static ?string $navigationLabel   = 'Menu ';
     protected static ?string $navigationGroup = 'Master';
-
+    protected static ?int $navigationSort = 4;
     public static function form(Form $form): Form
     {
         return $form

@@ -45,6 +45,7 @@ class DocumentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
     protected static ?string $navigationLabel   = 'Dokumen';
     protected static ?string $navigationGroup = 'Master';
+    protected static ?int $navigationSort = 2;
     public static function shouldRegisterNavigation(): bool
     {
         //dd(auth()->user()->role);

@@ -59,6 +59,13 @@ return [
             'url' => env('APP_URL') . '/document/thumbnails',
             'visibility' => 'public',
         ],
+        
+        'thumbnails_path' => [
+            'driver' => 'local',
+            'root' => public_path('thumbnails'),
+            'url' => env('APP_URL') . '/thumbnails',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',
