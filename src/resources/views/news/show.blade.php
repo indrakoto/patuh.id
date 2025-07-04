@@ -40,7 +40,7 @@
                                 <div class="col-md-12">
                                     @php
                                         $thumbnail = $related->thumbnail 
-                                            ? asset('articles/thumbnails/' . $related->thumbnail)
+                                            ? asset('thumbnails/' . $related->thumbnail)
                                             : asset('img/default.png');
                                     @endphp
                                     <img src="{{ $thumbnail }}" class="img-fluid rounded" alt="{{ $related->title }}">
@@ -50,7 +50,7 @@
                                 <div class="col-md-12">
                                     <h3 class="mt-3 mb-3">
                                         
-                                        <a href="{{ route('news.show', ['article_slug' => $related->slug, 'id' => $related->id]) }}">
+                                        <a href="{{ route('news.show', ['news_slug' => $related->slug, 'id' => $related->id]) }}">
                                             {{ $related->title }}
                                         </a>
                         
