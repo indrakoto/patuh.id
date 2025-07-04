@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class News extends Model
 {
@@ -30,5 +32,12 @@ class News extends Model
     public function getShortTitleAttribute()
     {
         return Str::words($this->title, 7, '...');
+    }
+
+    public function getTanggalIndoAttribute()
+    {
+        return Carbon::parse($this->created_at)
+            ->locale('id_ID') // Set locale ke Indonesia
+            ->translatedFormat('j F Y'); // Format: 27 April 2025
     }
 }

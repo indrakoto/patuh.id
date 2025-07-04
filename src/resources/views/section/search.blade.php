@@ -1,4 +1,4 @@
-    <form class="page-title__search" action="{{ route('knowledge.search') }}" method="POST">
+    <form class="page-title__search" action="{{ route('news.search') }}" method="POST">
         @csrf
         <div class="page-title__search-group">
           <input 

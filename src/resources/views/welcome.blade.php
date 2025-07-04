@@ -6,5 +6,5 @@
 @section('content')
   @include('section.slider')
   @include('section.about')
-  @include('section.peraturan')
+  @include('section.berita')
 @endsection
