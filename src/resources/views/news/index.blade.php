@@ -3,8 +3,7 @@
 @section('title', 'PatuhID')
 
 @section('content')
-  
-<section id="analisis" class="analisis section">
+<section id="knowledges" class="knowledges section">
   @include('section.page-title')
   
   <div class="container">
@@ -13,27 +12,25 @@
         <div class="row">
           @foreach($newsList as $news)
             <div class="col-lg-3 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
-              <div class="analisis-item mb-4">
-                <div class="analisis-content">
+              <div class="knowledge-item mb-4">
+                <div class="knowledge-content">
                   @php
                       $thumbnail = $news->thumbnail 
                           ? asset('thumbnails/' . $news->thumbnail)
                           : asset('img/default.png');
                   @endphp
-                  <img src="{{ $thumbnail }}" class="img-fluid rounded" alt="Thumbnail"  style="border: 1px solid #f1f1f1;" >
+                  <img src="{{ $thumbnail }}" class="img-fluid rounded" alt="Thumbnail"  style="border: 1px solid #f1f1f1; padding:0" >
                   
-                  <h3 class="mt-3"><a href="{{ route('news.show', ['news_slug' => $news->slug, 'id' => $news->id]) }}">{{ $news->short_title }}</a></h3>
+                  <h3 class="mt-2"><a href="{{ route('news.show', ['news_slug' => $news->slug, 'id' => $news->id]) }}">{{ $news->short_title }}</a></h3>
 
-                  <div class="box-footer d-flex justify-content-between align-items-center pt-1 pb-1 pr-1 pl-3">
+                  <div class="trainer d-flex justify-content-between align-items-center">
                       <div class="trainer-profile d-flex align-items-center">
-                        <!-- isi dengan institusi -->
+                          {{ $news->category->name }}
                       </div>
-                      <div class="trainer-rank d-flex align-items-center">
-                          <i class="bi bi-eye eye-icon"></i>&nbsp;0
-                          &nbsp;&nbsp;
-                          <i class="bi bi-star-fill start-icon" style="color:rgb(233, 187, 89);"></i>&nbsp;0
+                      <div class="trainer d-flex align-items-center">
+                          <i class="bi bi-calendar2-event me-1"></i> {{ $news->created_at->format('d/m/y') }}
                       </div>
-                  </div>  
+                  </div> 
                 </div>
               </div>
             </div>
@@ -50,7 +47,6 @@
                     </div>
   </div>
 </section>
-
 @endsection
 @push('scripts')
 <script>
