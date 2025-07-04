@@ -50,7 +50,7 @@
                                 <div class="col-md-12">
                                     <h3 class="mt-3 mb-3">
                                         
-                                        <a href="{{ route('knowledge.show', ['article_slug' => $related->slug, 'id' => $related->id]) }}">
+                                        <a href="{{ route('news.show', ['article_slug' => $related->slug, 'id' => $related->id]) }}">
                                             {{ $related->title }}
                                         </a>
                         
