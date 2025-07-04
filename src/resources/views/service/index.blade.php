@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'KMS - Analisis')
+@section('title', 'PatuhID')
 
 @section('content')
   
