@@ -1,6 +1,7 @@
 @php
   $menus = [
     ['label' => 'Beranda', 'url' => '/'],
+    ['label' => 'Berita', 'url' => '/news'],
     ['label' => 'Peraturan', 'url' => '/peraturan'],
     ['label' => 'Layanan', 'url' => '/layanan'],
   ];
