@@ -9,7 +9,7 @@
 
         <div class="row">
         @foreach ($peraturan as $item)
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch aos-init aos-animate mb-4" data-aos="zoom-in" data-aos-delay="100">
             <div class="course-item">
               <img src="{{ asset('document/thumbnails'.$item->thumbnail_path) }}" class="img-fluid" alt="Patuh.ID">
               <div class="course-content">
