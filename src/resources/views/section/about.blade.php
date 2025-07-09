@@ -6,7 +6,7 @@
         <div class="row gy-4">
 
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-            <img src="img/course-details.jpg" class="img-fluid" alt="">
+            <img src="{{ asset('assets/img/course-details.jpg') }}" class="img-fluid" alt="Patuh.ID">
           </div>
 
           <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">

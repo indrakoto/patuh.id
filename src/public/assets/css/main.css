@@ -1,13 +1,12 @@
 /* Fonts */
 :root {
-  --default-font: Roboto, sans-serif , "Open Sans",  system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Roboto", sans-serif;
-  --nav-font: "Roboto",  sans-serif;
+  --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway",  sans-serif;
+  --nav-font: "Poppins",  sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-image : url('/img/doodle.png');
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #37423b; /* Color for headings, subheadings and title throughout the website */
@@ -18,12 +17,12 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #272828;  /* The default color of the main navmenu links */
-  --nav-hover-color: #ffc541; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-color: #1f4f8e;  /* The default color of the main navmenu links */
+  --nav-hover-color: #444444; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #272828; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #ffc541;
+  --nav-dropdown-color: #1f4f8e; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #444444;
   --nav-float-color: #df9c01; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
@@ -60,12 +59,8 @@
 --------------------------------------------------------------*/
 body {
   color: var(--default-color);
+  background-color: var(--background-color);
   font-family: var(--default-font);
-  background-repeat: repeat;
-  margin: 0;
-  padding: 0;
-  background-size: 150px; /* Sesuaikan ukuran sesuai kebutuhan */
-  min-height: 100vh; /* Pastikan body mencakup seluruh tinggi viewport */
 }
 
 a {
@@ -225,10 +220,10 @@ h6 {
 --------------------------------------------------------------*/
 .header {
   color: var(--default-color);
-  background-color: #284173; /*var(--background-color);*/
+  background-color: var(--background-color);
   transition: all 0.5s;
   z-index: 997;
-  border-bottom: 5px solid #2d8d1a;
+  border-bottom: 5px solid #005b99;
 }
 
 .header .logo {
@@ -241,12 +236,12 @@ h6 {
 }
 
 .header .logo h1 {
+  font-family: sans-serif;
   font-weight: 700;
   font-size: 30px;
   margin: 0;
   letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #fff; /*var(--accent-color);*/
+  color: var(--accent-color);
 }
 
 .header .btn-getstarted,
@@ -310,18 +305,16 @@ h6 {
 
   .navmenu a,
   .navmenu a:focus {
-    color: #ffffff; /*var(--nav-color);*/
+    color: var(--nav-color);
     padding: 18px 15px;
-    font-size: 15px;
+    font-size: 16px;
     font-family: var(--nav-font);
     font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: space-between;
     white-space: nowrap;
-    /*transition: 0.3s;*/
-    letter-spacing: 0;
-    line-height: normal;
+    transition: 0.3s;
   }
 
   .navmenu a i,
@@ -560,7 +553,7 @@ h6 {
   color: var(--default-color);
   background-color: var(--background-color);
   font-size: 14px;
-  padding-bottom: 50px;
+  /*padding-bottom: 50px;*/
   position: relative;
 }
 
@@ -702,7 +695,6 @@ h6 {
 .footer .copyright {
   padding-top: 25px;
   padding-bottom: 25px;
-  background-color: color-mix(in srgb, var(--default-color), transparent 95%);
 }
 
 .footer .copyright p {
@@ -2684,7 +2676,6 @@ section,
   height: 220px;
 }
 
-
 .sliders {
     background-image: var(--background-image);
     background-repeat: repeat;
@@ -2693,6 +2684,7 @@ section,
     padding: 0;
     padding: 30px 0;
 }
+
 
 
 /*--------------------------------------------------------------

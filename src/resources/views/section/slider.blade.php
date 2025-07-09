@@ -14,13 +14,13 @@
                     <!-- Slides -->
                     <div class="carousel-inner rounded">
                         <div class="carousel-item active">
-                          <img src="{{ asset('img/course-details.jpg') }}" class="d-block w-100" alt="...">
+                          <img src="{{ asset('assets/img/course-details.jpg') }}" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                          <img src="{{ asset('img/about.jpg') }}" class="d-block w-100" alt="...">
+                          <img src="{{ asset('assets/img/about.jpg') }}" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                          <img src="{{ asset('img/course-3.jpg') }}" class="d-block w-100" alt="...">
+                          <img src="{{ asset('assets/img/course-3.jpg') }}" class="d-block w-100" alt="...">
                         </div>
                     </div>
 

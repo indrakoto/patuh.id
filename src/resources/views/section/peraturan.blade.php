@@ -11,7 +11,7 @@
                 @php
                     $thumbnail = $document->thumbnail_path 
                         ? asset('document/thumbnails' . $document->thumbnail_path)
-                        : asset('img/default.png');
+                        : asset('assets/img/default.png');
                 @endphp
                 <img src="{{ $thumbnail }}" class="img-fluid rounded" alt="Thumbnail"  style="border: 1px solid #f1f1f1;" >
                 <h3 class="mt-3"><a href="#">{{ $document->short_title }}</a></h3>

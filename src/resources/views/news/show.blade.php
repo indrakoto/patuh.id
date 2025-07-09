@@ -41,7 +41,7 @@
                                     @php
                                         $thumbnail = $related->thumbnail 
                                             ? asset('thumbnails/' . $related->thumbnail)
-                                            : asset('img/default.png');
+                                            : asset('assets/img/default.png');
                                     @endphp
                                     <img src="{{ $thumbnail }}" class="img-fluid rounded" alt="{{ $related->title }}">
                                 </div>

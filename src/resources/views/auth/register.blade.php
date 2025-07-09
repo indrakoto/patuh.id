@@ -9,11 +9,10 @@
 <!-- Forum Section -->
 <section id="forum" class="forum section">
     
-    @include('section.page-title')
     <div class="container" style="max-width: 400px;">
         <div class="card mb-3 border rounded" style="border-color: #e0e0e0 !important;">
             <div class="card-body p-4">
-                <h3>Registrasi Akun Baru</h3>
+                <h3>Buat Akun Baru</h3>
                 
                 @if(session('success'))
                     <div class="alert alert-success">{{ session('success') }}</div>

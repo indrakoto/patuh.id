@@ -48,7 +48,7 @@
             <div class="col-lg-3 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
               <div class="analisis-item mb-4">
                 <div class="analisis-content">
-                  <img src="{{ asset('img/rectangle-23.png') }}" class="img-fluid" alt="...">
+                  <img src="{{ asset('assets/img/rectangle-23.png') }}" class="img-fluid" alt="...">
                   <h3 class="mt-3"><a href="{{ route('detail.show', ['article_slug' => $aList->slug, 'id' => $aList->id]) }}">{{ $aList->short_title }}</a></h3>
 
                   <div class="box-footer d-flex justify-content-between align-items-center pt-1 pb-1 pr-1 pl-3">
@@ -78,7 +78,7 @@
           <div class="col-lg-3 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
             <div class="analisis-item mb-4">
               <div class="">
-                <img src="{{ asset('img/rectangle-23.png') }}" class="img-fluid" alt="...">
+                <img src="{{ asset('assets/img/rectangle-23.png') }}" class="img-fluid" alt="...">
                 @if($item->redirect_link==1)
                     <h3 class="mt-3"><a href="{{ $item->embed_link }}">{{ $item->short_title }}</a></h3>
                 @else
