@@ -2,6 +2,10 @@
 
 @section('title', 'Login Pengguna')
 
+@push('styles')
+  <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
+@endpush
+
 @section('content')
 <!-- Forum Section -->
 <section id="about" class="about section">
@@ -9,7 +13,7 @@
         <div class="row">
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                 <img src="{{ asset('assets/img/logo-patuhid.png') }}" class="" height="150px" alt="Patuh.ID">
-                <div class="mt-4">
+                <div class="mt-4" style="text-align: justify;">
                 <p>Website PATUH.ID menampilkan database Peraturan Perundang-undangan yang memuat informasi mengenai jenis, status hubungan antar peraturan, dan statistik peraturan perundangan-undangan LK3 di Indonesia.</p>
                 <p>PATUH.ID bertujuan untuk menyediakan akses mudah dan informasi yang terpercaya mengenai berbagai peraturanLK3 di Indonesia kepada masyarakat umum.</p>
 
@@ -17,7 +21,7 @@
                 </div>
             </div>
 
-<div class="col-lg-6" style="padding-left:50px;">
+<div class="col-lg-6">
     <div class="card border-0 shadow-sm rounded-3" style="background-color: #f8f9fa;">
         <div class="card-body p-4 p-md-5">
             <!-- Logo dan Judul -->

@@ -395,7 +395,7 @@ h6 {
 /* Navmenu - Mobile */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
-    color: #ffffff;
+    color: var(--accent-color);
     font-size: 28px;
     line-height: 0;
     margin-right: 10px;
