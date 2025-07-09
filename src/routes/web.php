@@ -80,6 +80,8 @@ Route::prefix('peraturan')->group(function () {
     Route::get('/kategori/{slug}/{id_kategori}', [PeraturanController::class, 'byKategori'])
          ->name('peraturan.kategori');
     
+    Route::get('/search', [PeraturanController::class, 'search'])->name('peraturan.search');
+
     // Detail peraturan (protected)
     Route::middleware(['auth'])->group(function () {
         Route::get('/baca/{slug}/{id_peraturan}', [PeraturanController::class, 'show'])

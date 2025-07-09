@@ -49,4 +49,35 @@ class PeraturanController extends Controller
         return view('peraturan.show', compact('peraturan'));
     }
 
+        /**
+     * Handle search request
+     */
+    public function search(Request $request)
+    {
+        $query = Document::query();
+
+        // Filter by keyword
+        if ($request->has('q')) {
+            $searchTerm = $request->input('q');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'like', "%{$searchTerm}%")
+                  ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Filter by tahun (contoh tambahan)
+        //if ($request->has('tahun')) {
+        //    $query->whereYear('tanggal_dokumen', $request->input('tahun'));
+        //}
+
+        $results = $query->paginate(6)
+                       ->appends($request->query());
+
+        return view('peraturan.search', [
+            'results' => $results,
+            'searchQuery' => $request->input('q', ''),
+            //'tahun' => $request->input('tahun', '')
+        ]);
+    }
+
 }
