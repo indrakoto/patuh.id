@@ -99,6 +99,10 @@ class DocumentResource extends Resource
                                 $set('file_type', $uploadedFile->getMimeType());
                             }
                         }),
+                    // Field lain, misalnya untuk menyimpan metadata:
+                    TextInput::make('file_name')->label('File Name')->disabled(),
+                    TextInput::make('file_size')->label('File Size (bytes)')->disabled(),
+                    TextInput::make('file_type')->label('File MIME Type')->disabled(),
 
                     Croppie::make('thumbnail_path')
                         ->disk('thumbnails_doc')

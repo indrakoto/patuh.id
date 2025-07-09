@@ -7,27 +7,28 @@
   ];
 
   if(Auth::check()) {
-    // Siapkan submenu items
-    $submenuItems = [
-      [
-        'label' => '<span><i class="bi bi-house-fill"></i> Dashboard</span>',
-        'url' => '#',
-        'raw' => true,
-      ]
-    ];
-    
-    // Tambahkan menu Admin jika role sesuai
-    if (in_array(Auth::user()->role, ['admin', 'teknis'])) {
+
+    // Tambahkan menu Guest jika role sesuai
+    if (in_array(Auth::user()->role, ['guest'])) {
       $submenuItems[] = [
-        'label' => '<i class="bi bi-gear"></i> Admin Page',
-        'url' => '/administrator',
+        'label' => '<span><i class="bi bi-house-fill"></i> Dashboard</span>',
+        'url' => '/dashboard',
+        'raw' => true
+      ];
+    }
+
+    // Tambahkan menu Admin jika role sesuai
+    if (in_array(Auth::user()->role, ['admin'])) {
+      $submenuItems[] = [
+        'label' => '<span><i class="bi bi-house-fill"></i> Dashboard</span>',
+        'url' => '/officer',
         'raw' => true
       ];
     }
     
     // Tambahkan menu Logout
     $submenuItems[] = [
-        'label' => '<span class="logout-btn" style="cursor:pointer;display:block;padding:0.5rem 1rem;">
+        'label' => '<span class="logout-btn" style="cursor:pointer;display:block;">
                           <i class="bi bi-box-arrow-right"></i> Logout
                        </span>',
         'url' => 'javascript:void(0)',
