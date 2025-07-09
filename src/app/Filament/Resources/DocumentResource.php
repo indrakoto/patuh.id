@@ -85,11 +85,18 @@ class DocumentResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->required()
                         ->disk('private_uploads') // gunakan disk private
-                        ->afterStateUpdated(function (?string $state, callable $set, ?UploadedFile $record) {
+                        /*->afterStateUpdated(function (?string $state, callable $set, ?UploadedFile $record) {
                             if ($record) {
                                 $set('file_name', $record->getClientOriginalName());
                                 $set('file_size', $record->getSize()); // dalam byte
                                 $set('file_type', $record->getMimeType());
+                            }
+                        })*/
+                        ->afterStateUpdated(function (?string $state, callable $set, $uploadedFile = null) {
+                            if ($uploadedFile instanceof UploadedFile) {
+                                $set('file_name', $uploadedFile->getClientOriginalName());
+                                $set('file_size', $uploadedFile->getSize());
+                                $set('file_type', $uploadedFile->getMimeType());
                             }
                         }),
 
