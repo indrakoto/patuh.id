@@ -121,7 +121,9 @@ class DocumentResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->sortable(),
-                TextColumn::make('title')->searchable()->sortable(),
+                TextColumn::make('title')->limit(80)
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('categories.name')->label('Category')->sortable(),
                 TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
