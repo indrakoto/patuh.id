@@ -30,6 +30,15 @@
                 <h3 class="fw-bold">Login ke akun Anda</h3>
                 <p class="text-muted">Masukkan email dan password untuk mengakses dashboard</p>
             </div>
+            
+    <!-- Notifikasi -->
+    @if (session('warning'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            {{ session('warning') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
             @if(session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>

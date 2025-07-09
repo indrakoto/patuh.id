@@ -21,9 +21,16 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
+        //if (Auth::attempt($credentials)) {
+        //    $request->session()->regenerate();
+        //    return redirect()->intended('/')->with('success', 'Login berhasil!');
+       // }
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/')->with('success', 'Login berhasil!');
+            return redirect()
+                ->intended(session('redirect_after_login', '/'))
+                ->with('success', 'Login berhasil!');
         }
 
         return back()->withErrors([

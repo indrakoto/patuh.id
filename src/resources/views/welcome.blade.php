@@ -5,6 +5,6 @@
 
 @section('content')
   @include('section.slider')
-  @include('section.about')
+  @include('section.layanan')
   @include('section.berita')
 @endsection

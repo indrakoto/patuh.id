@@ -5,6 +5,8 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PeraturanController;
+use App\Http\Controllers\LayananController;
 
 use App\Models\Document;
 use App\Models\News;
@@ -56,6 +58,8 @@ Route::prefix('news')->group(function() {
 });
 
 
+
+
 Route::get('/document/{fileName}', DocumentController::class)
     ->middleware('auth')
     ->name('document.view');
@@ -66,3 +70,29 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middle
 
 Route::get('/registrasi', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/registrasi', [RegisterController::class, 'register'])->name('register.submit');
+
+
+Route::prefix('peraturan')->group(function () {
+    // Halaman utama peraturan
+    Route::get('/', [PeraturanController::class, 'index'])->name('peraturan.index');
+    
+    // Filter peraturan by kategori
+    Route::get('/kategori/{slug}/{id_kategori}', [PeraturanController::class, 'byKategori'])
+         ->name('peraturan.kategori');
+    
+    // Detail peraturan (protected)
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/baca/{slug}/{id_peraturan}', [PeraturanController::class, 'show'])
+             ->name('peraturan.show');
+    });
+});
+
+// Layanan Routes
+Route::prefix('layanan')->group(function () {
+    // Halaman utama layanan
+    Route::get('/', [LayananController::class, 'index'])->name('layanan.index');
+    
+    // Detail layanan
+    Route::get('/baca/{slug}/{id_layanan}', [LayananController::class, 'show'])
+         ->name('layanan.show');
+});

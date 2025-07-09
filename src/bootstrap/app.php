@@ -13,6 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->statefulApi(); // <-- Penting untuk Sanctum
+        
+        // Tambahkan middleware custom untuk auth
+        $middleware->alias([
+            'auth' => \App\Http\Middleware\RedirectIfNotAuthenticated::class,
+            //'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

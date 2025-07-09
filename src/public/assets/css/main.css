@@ -1214,6 +1214,21 @@ section,
   transition: 0.3s;
 }
 
+.why-us .icon-box .img {
+  color: var(--accent-color);
+  font-size: 32px;
+  margin-bottom: 30px;
+  background: color-mix(in srgb, var(--accent-color), transparent 95%);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height:72px;
+  transition: 0.3s;
+  padding: 10px;
+}
+
 .why-us .icon-box h4 {
   font-size: 20px;
   font-weight: 700;
@@ -1226,6 +1241,11 @@ section,
 }
 
 .why-us .icon-box:hover i {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+}
+
+.why-us .icon-box:hover .img {
   color: var(--contrast-color);
   background: var(--accent-color);
 }
