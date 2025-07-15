@@ -2,35 +2,68 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Payment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'document_id',
-        'amount',
-        'status',
+        'membership_plan_id',
+        'order_id',
+        'price',
+        'payment_type',
         'payment_method',
-        'transaction_id',
-        'paid_at',
+        'payment_status',
+        'payment_url',
+        'payload',
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2',
-        'paid_at' => 'datetime',
+        'payload' => 'array',
+        'price' => 'double'
     ];
+    
+    // Payment status constants
+    const STATUS_PENDING = 'pending';
+    const STATUS_SUCCESS = 'success';
+    const STATUS_FAILED = 'failed';
+    const STATUS_CANCELLED = 'cancelled';
 
-    public function user()
+    public function membershipPlan()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(MembershipPlan::class, 'membership_plan_id');
     }
 
-    public function document()
+    // Relasi ke PaymentLog
+    public function paymentLogs()
     {
-        return $this->belongsTo(Document::class);
+        return $this->hasMany(PaymentLog::class, 'payment_id');
     }
+    //atau
+    public function logs()
+    {
+        return $this->hasMany(PaymentLog::class, 'payment_id');
+    }
+
+    /**
+     * Check if payment is successful
+     */
+    public function isSuccessful(): bool
+    {
+        return $this->payment_status === self::STATUS_SUCCESS;
+    }
+
+    /**
+     * Format price to IDR currency
+     */
+    public function getFormattedPriceAttribute(): string
+    {
+        return 'Rp ' . number_format($this->price, 0, ',', '.');
+    }
+
 }
+

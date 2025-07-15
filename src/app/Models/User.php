@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens; 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -46,4 +47,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function memberships()
+    {
+        return $this->hasMany(UserMembership::class);
+    }
+
+    /**
+     * Get active membership
+     */
+    public function activeMembership(): HasOne
+    {
+        return $this->hasOne(UserMembership::class)->where('is_active', true);
+    }
+
+    /**
+     * Get all payments
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
 }
