@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PeraturanController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\MembershipController;
 
 use App\Models\Document;
 use App\Models\News;
@@ -97,4 +98,15 @@ Route::prefix('layanan')->group(function () {
     // Detail layanan
     Route::get('/baca/{slug}/{id_layanan}', [LayananController::class, 'show'])
          ->name('layanan.show');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/membership/index', [MembershipController::class, 'index'])->name('membership.index');
+    Route::get('/membership/plans', [MembershipController::class, 'plans'])->name('membership.plans');
+    Route::post('/membership/purchase/{planId}', [MembershipController::class, 'purchase'])->name('membership.purchase');
+    
+    // Payment routes
+    Route::post('/checkout', [MembershipController::class, 'checkout'])->name('payment.checkout');
+    Route::get('/payment/callback', [MembershipController::class, 'paymentCallback'])->name('payment.callback');
+    
 });
