@@ -73,21 +73,44 @@ Route::get('/registrasi', [RegisterController::class, 'showRegistrationForm'])->
 Route::post('/registrasi', [RegisterController::class, 'register'])->name('register.submit');
 
 
-Route::prefix('peraturan')->group(function () {
-    // Halaman utama peraturan
+/*Route::prefix('peraturan')->group(function () {
     Route::get('/', [PeraturanController::class, 'index'])->name('peraturan.index');
     
-    // Filter peraturan by kategori
     Route::get('/kategori/{slug}/{id_kategori}', [PeraturanController::class, 'byKategori'])
          ->name('peraturan.kategori');
     
     Route::get('/search', [PeraturanController::class, 'search'])->name('peraturan.search');
 
-    // Detail peraturan (protected)
     Route::middleware(['auth'])->group(function () {
         Route::get('/baca/{slug}/{id_peraturan}', [PeraturanController::class, 'show'])
              ->name('peraturan.show');
     });
+
+    Route::get('/download/{slug}/{id}', [PeraturanController::class, 'download'])
+        ->name('peraturan.download');
+
+    Route::get('/peraturan/download-token/{token}', [PeraturanController::class, 'downloadByToken'])
+        ->middleware('auth')
+        ->name('peraturan.download.token');
+
+});*/
+// 🔓 Route Publik (Tidak Perlu Login)
+Route::prefix('peraturan')->group(function () {
+    Route::get('/', [PeraturanController::class, 'index'])->name('peraturan.index');
+    Route::get('/kategori/{slug}/{id_kategori}', [PeraturanController::class, 'byKategori'])->name('peraturan.kategori');
+    Route::get('/search', [PeraturanController::class, 'search'])->name('peraturan.search');
+});
+
+// 🔐 Route Terproteksi (Hanya untuk User Login)
+Route::middleware(['auth'])->prefix('peraturan')->group(function () {
+    // Baca dokumen menggunakan token terenkripsi (lebih aman)
+    Route::get('/baca-token/{token}', [PeraturanController::class, 'showByToken'])->name('peraturan.show.token');
+
+    // Download dokumen via ID langsung (opsional, bisa di-nonaktifkan)
+    Route::get('/download/{slug}/{id}', [PeraturanController::class, 'download'])->name('peraturan.download');
+
+    // Download via token terenkripsi (disarankan)
+    Route::get('/download-token/{token}', [PeraturanController::class, 'downloadByToken'])->name('peraturan.download.token');
 });
 
 // Layanan Routes
