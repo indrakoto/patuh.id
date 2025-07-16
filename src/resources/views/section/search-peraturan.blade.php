@@ -4,7 +4,7 @@
           <input 
             type="text" 
             class="page-title__search-input" 
-            placeholder="Cari Peraturan" 
+            placeholder="Cari Peraturan Lainnya" 
             name="q"
             aria-label="Search articles"
             value="{{ old('q', $searchQuery ?? '') }}"

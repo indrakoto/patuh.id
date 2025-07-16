@@ -67,4 +67,17 @@ class Document extends Model
         });
 
     }
+
+
+    // Document.php
+    public function getDownloadFilename()
+    {
+        $slug = Str::slug($this->slug ?: $this->title);
+        $shortSlug = collect(explode('-', $slug))->take(5)->implode('-');
+        $hash = substr(sha1($this->id . '-' . $this->created_at), 0, 6);
+        $ext = pathinfo($this->file_path, PATHINFO_EXTENSION);
+
+        return $shortSlug . '-' . $hash . '.' . $ext;
+    }
+
 }

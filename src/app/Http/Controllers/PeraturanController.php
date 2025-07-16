@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\DocumentDownloadLog;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 class PeraturanController extends Controller
 {
@@ -31,24 +36,59 @@ class PeraturanController extends Controller
     {
         if (!auth()->check()) {
             return redirect()->route('login')->with([
-                'warning' => 'Silakan login untuk membaca peraturan: "Judul Peraturan"',
-                'redirectAfterLogin' => url()->current()
+                'warning' => 'Silakan login untuk membaca peraturan',
+                'redirectAfterLogin' => url()->current(),
             ]);
         }
-    
-        $peraturan = Document::findOrFail($id_peraturan);
-        
-        // Validasi slug
-        if ($peraturan->slug !== $slug) {
-            return redirect()->route('peraturan.show', [
-                'slug' => $peraturan->slug, 
-                'id_peraturan' => $id_peraturan
-            ], 301);
-        }
-        
-        return view('peraturan.show', compact('peraturan'));
+
+        $peraturan = Document::where('id', $id_peraturan)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        // Akses tetap dicek untuk tampilkan tombol download saja
+        $userHasAccess = $peraturan->is_public
+            || $peraturan->created_by == auth()->id();
+
+        return view('peraturan.show', [
+            'peraturan' => $peraturan,
+            'userHasAccess' => $userHasAccess,
+        ]);
     }
 
+    public function showX($slug, $id_peraturan)
+    {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with([
+                'warning' => 'Silakan login untuk membaca peraturan',
+                'redirectAfterLogin' => url()->current(),
+            ]);
+        }
+
+        $peraturan = Document::findOrFail($id_peraturan);
+
+        $userHasAccess = $peraturan->is_public
+            || $peraturan->created_by == auth()->id()
+            || $peraturan->accesses()->where('user_id', auth()->id())->exists();
+
+        if (!$userHasAccess) {
+            abort(403, 'Anda tidak memiliki akses ke dokumen ini.');
+        }
+
+        return view('peraturan.show', [
+            'peraturan' => $peraturan,
+            'userHasAccess' => $userHasAccess,
+        ]);
+    }
+
+    public function showByToken($token)
+    {
+        try {
+            $data = Crypt::decrypt($token); // ['id' => ..., 'slug' => ...]
+            return $this->show($data['slug'], $data['id']);
+        } catch (\Exception $e) {
+            abort(403, 'Invalid or expired token.');
+        }
+    }
         /**
      * Handle search request
      */
@@ -78,6 +118,80 @@ class PeraturanController extends Controller
             'searchQuery' => $request->input('q', ''),
             //'tahun' => $request->input('tahun', '')
         ]);
+    }
+
+    public function download($slug, $id)
+    {
+        $document = Document::where('id', $id)
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        // Hanya user login yang bisa download
+        if (!auth()->check()) {
+            abort(403, 'Unauthorized access');
+        }
+
+        $user = auth()->user();
+
+        // Jika dokumen private → validasi membership
+        if (!$document->is_public) {
+            $membership = $user->activeMembership;
+
+            if (!$membership) {
+                return back()->with('error', 'Anda tidak memiliki langganan aktif.');
+            }
+
+            $plan = $membership->plan; // Relasi ke MembershipPlan
+            $maxDownloads = match ($plan->id) {
+                2 => 5,   // Silver
+                3 => 10,  // Gold
+                default => 0
+            };
+
+            $downloadCount = DocumentDownloadLog::where('user_id', $user->id)
+                ->whereBetween('downloaded_at', [$membership->start_date, $membership->end_date])
+                ->count();
+
+            if ($downloadCount >= $maxDownloads) {
+                return back()->with('error', 'Batas download Anda telah tercapai.');
+            }
+        }
+
+        // Validasi file ada
+        $filePath = $document->file_path;
+
+        if (!Storage::disk('private_uploads')->exists($filePath)) {
+            abort(404, 'File tidak ditemukan.');
+        }
+
+        // ✅ Catat log download
+        DocumentDownloadLog::create([
+            'user_id'       => $user->id,
+            'document_id'   => $document->id,
+            'downloaded_at' => now(),
+            'ip_address'    => request()->ip(),
+            'user_agent'    => request()->userAgent(),
+        ]);
+
+        // Tambah total download
+        $document->increment('download_count');
+
+        // Ambil path & nama file
+        $fullPath = Storage::disk('private_uploads')->path($filePath);
+        $downloadFileName = $document->getDownloadFilename();
+
+        return response()->download($fullPath, $downloadFileName);
+    }
+
+    public function downloadByToken($token)
+    {
+        try {
+            $data = Crypt::decrypt($token); // hasil: ['id' => ..., 'slug' => ...]
+
+            return $this->download($data['slug'], $data['id']);
+        } catch (\Exception $e) {
+            abort(403, 'Invalid download token.');
+        }
     }
 
 }

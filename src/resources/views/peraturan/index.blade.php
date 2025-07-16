@@ -23,7 +23,13 @@
                     <p class=""><i class="bi bi-person user-icon"></i> 0</p>
                   </div>
 
-                  <h3><a href="{{ route('peraturan.show', ['slug' => Str::slug($item->slug), 'id_peraturan' => $item->id]) }}">{{ $item->title }}</a></h3>
+                  @php
+                      $showToken = Crypt::encrypt([
+                          'id' => $item->id,
+                          'slug' => $item->slug
+                      ]);
+                  @endphp
+                  <h3><a href="{{ route('peraturan.show.token', ['token' => $showToken]) }}">{{ $item->title }}</a></h3>
 
                 </div>
               </div>
