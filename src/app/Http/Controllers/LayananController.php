@@ -7,10 +7,9 @@ use App\Models\MembershipPlan;
 
 class LayananController extends Controller
 {
-    public function plans()
+    public function index()
     {
         $plans = MembershipPlan::all();
-        return view('layanan.index', compact('index'));
+        return view('layanan.index', compact('plans'));
     }
-    
 }

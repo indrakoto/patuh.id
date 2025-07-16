@@ -126,9 +126,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/membership/purchase/{planId}', [MembershipController::class, 'purchase'])->name('membership.purchase');
     
     // Payment routes
-    Route::post('/checkout', [MembershipController::class, 'checkout'])->name('payment.checkout');
-    Route::get('/payment/callback', [MembershipController::class, 'paymentCallback'])->name('payment.callback');
-    
+    Route::post('/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+    Route::get('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
 });
 
 // Midtrans webhook
