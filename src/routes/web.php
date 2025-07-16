@@ -132,11 +132,3 @@ Route::middleware(['auth'])->group(function () {
 
 // Midtrans webhook
 Route::post('/payment/notification', [PaymentController::class, 'handleNotification']);
-
-Route::get('/midtrans-config', function() {
-    return response()->json([
-        'server_key' => config('services.midtrans.server_key'),
-        'client_key' => config('services.midtrans.client_key'),
-        'is_production' => config('services.midtrans.is_production')
-    ]);
-});
