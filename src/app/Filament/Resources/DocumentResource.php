@@ -85,21 +85,34 @@ class DocumentResource extends Resource
                         ->acceptedFileTypes(['application/pdf'])
                         ->required()
                         ->disk('private_uploads') // gunakan disk private
-                        /*->afterStateUpdated(function (?string $state, callable $set, ?UploadedFile $record) {
-                            if ($record) {
-                                $set('file_name', $record->getClientOriginalName());
-                                $set('file_size', $record->getSize()); // dalam byte
-                                $set('file_type', $record->getMimeType());
-                            }
-                        })*/
                         ->afterStateUpdated(function (?string $state, callable $set, $uploadedFile = null) {
                             if ($uploadedFile instanceof UploadedFile) {
                                 $set('file_name', $uploadedFile->getClientOriginalName());
                                 $set('file_size', $uploadedFile->getSize());
                                 $set('file_type', $uploadedFile->getMimeType());
                             }
+                        })
+                        ->afterStateUpdated(function (?string $state, callable $set, $uploadedFile = null) {
+                            //\Log::info('afterStateUpdated dipanggil');
+                            if ($uploadedFile instanceof UploadedFile) {
+                                /*Log::info('File info:', [
+                                    'name' => $uploadedFile->getClientOriginalName(),
+                                    'size' => $uploadedFile->getSize(),
+                                    'type' => $uploadedFile->getMimeType(),
+                                ]);*/
+
+                                $set('file_name', $uploadedFile->getClientOriginalName());
+                                $set('file_size', $uploadedFile->getSize());
+                                $set('file_type', $uploadedFile->getMimeType());
+                            }
+                            // Debugging - pastikan nilai terset
+                            logger()->debug('File attributes set:', [
+                                'name' => $uploadedFile->getClientOriginalName(),
+                                'size' => $uploadedFile->getSize(),
+                                'type' => $uploadedFile->getMimeType()
+                            ]);
                         }),
-                    // Field lain, misalnya untuk menyimpan metadata:
+
                     TextInput::make('file_name')->label('File Name')->disabled(),
                     TextInput::make('file_size')->label('File Size (bytes)')->disabled(),
                     TextInput::make('file_type')->label('File MIME Type')->disabled(),
@@ -183,4 +196,25 @@ class DocumentResource extends Resource
             ]);
     }
 
+    public static function beforeCreate(array &$data): void
+    {
+        if (isset($data['file_path']) && $data['file_path'] instanceof UploadedFile) {
+            $file = $data['file_path'];
+
+            $data['file_name'] = $file->getClientOriginalName();
+            $data['file_size'] = $file->getSize();
+            $data['file_type'] = $file->getMimeType();
+        }
+    }
+
+    public static function beforeEdit(array &$data): void
+    {
+        if (isset($data['file_path']) && $data['file_path'] instanceof UploadedFile) {
+            $file = $data['file_path'];
+
+            $data['file_name'] = $file->getClientOriginalName();
+            $data['file_size'] = $file->getSize();
+            $data['file_type'] = $file->getMimeType();
+        }
+    }
 }

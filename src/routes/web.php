@@ -8,6 +8,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PeraturanController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\PaymentController;
 
 use App\Models\Document;
 use App\Models\News;
@@ -117,10 +118,6 @@ Route::middleware(['auth'])->prefix('peraturan')->group(function () {
 Route::prefix('layanan')->group(function () {
     // Halaman utama layanan
     Route::get('/', [LayananController::class, 'index'])->name('layanan.index');
-    
-    // Detail layanan
-    Route::get('/baca/{slug}/{id_layanan}', [LayananController::class, 'show'])
-         ->name('layanan.show');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -133,3 +130,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payment/callback', [MembershipController::class, 'paymentCallback'])->name('payment.callback');
     
 });
+
+// Midtrans webhook
+Route::post('/payment/notification', [PaymentController::class, 'handleNotification']);

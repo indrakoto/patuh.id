@@ -10,6 +10,12 @@ use App\Services\MidtransService;
 
 class MembershipController extends Controller
 {
+    public function index()
+    {
+        $plans = MembershipPlan::all();
+        return view('membership.index', compact('plans'));
+    }
+
     public function plans()
     {
         $plans = MembershipPlan::all();
