@@ -15,6 +15,8 @@ class MidtransController extends Controller
 {
     public function webhook(Request $request)
     {
+        Log::info('Webhook received', ['payload' => $request->all()]);
+
         try {
             // Validasi Signature Key (opsional tapi direkomendasikan)
             $serverKey = config('midtrans.server_key');
@@ -75,7 +77,11 @@ class MidtransController extends Controller
 
             return response()->json(['message' => 'Webhook processed successfully']);
         } catch (\Exception $e) {
-            Log::error("Midtrans webhook error: " . $e->getMessage());
+            //Log::error("Midtrans webhook error: " . $e->getMessage());
+            Log::error('Webhook error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return response()->json(['message' => 'Webhook error'], 500);
         }
     }
