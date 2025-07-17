@@ -1,19 +1,21 @@
-<?php 
+<?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\MembershipPlan;
 use App\Models\Payment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Midtrans\Snap;
 use Midtrans\Config;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
     public function checkout($planId)
     {
         $plan = MembershipPlan::findOrFail($planId);
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Midtrans config
         Config::$serverKey = config('services.midtrans.server_key');
@@ -22,6 +24,15 @@ class PaymentController extends Controller
         Config::$is3ds = true;
 
         $orderId = 'ORDER-' . strtoupper(Str::random(10));
+
+        // Buat record pembayaran ke DB (belum sukses, status awal: pending)
+        $payment = Payment::create([
+            'user_id' => $user->id,
+            'membership_plan_id' => $plan->id,
+            'order_id' => $orderId,
+            'amount' => $plan->price,
+            'payment_status' => 'pending',
+        ]);
 
         $params = [
             'transaction_details' => [
