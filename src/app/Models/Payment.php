@@ -10,7 +10,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Payment extends Model
 {
     use HasFactory;
-
+    // Payment status constants
+    const STATUS_PENDING = 'pending';
+    const STATUS_SUCCESS = 'success';
+    const STATUS_FAILED = 'failed';
+    const STATUS_CANCELLED = 'cancelled';
+    
     protected $fillable = [
         'membership_plan_id',
         'order_id',
@@ -27,11 +32,7 @@ class Payment extends Model
         'price' => 'double'
     ];
     
-    // Payment status constants
-    const STATUS_PENDING = 'pending';
-    const STATUS_SUCCESS = 'success';
-    const STATUS_FAILED = 'failed';
-    const STATUS_CANCELLED = 'cancelled';
+
 
     public function membershipPlan()
     {

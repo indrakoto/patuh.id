@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\ArtikelController;
+use App\Http\Controllers\Api\MidtransController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/artikels', [ArtikelController::class, 'index']);
@@ -25,3 +26,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Endpoint dokumen umum tanpa autentikasi
 Route::get('/documents', [DocumentController::class, 'index']);
+
+// api.php
+Route::post('/midtrans/webhook', [MidtransController::class, 'webhook']);
+
+
+// routes/api.php
+//Route::post('midtrans/webhook', MidtransWebhookController::class)
+//    ->middleware('midtrans.webhook')
+//    ->name('api.midtrans.webhook');

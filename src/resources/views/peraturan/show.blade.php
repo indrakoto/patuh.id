@@ -58,12 +58,6 @@
               <p>PDF</p>
             </div>
 
-            <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Download File</h5>
-              <p><a href="link-download">Download</a></p>
-            </div>
-
-            <br/>
             @php
                 use Illuminate\Support\Facades\Crypt;
                 $token = Crypt::encrypt(['id' => $peraturan->id, 'slug' => $peraturan->slug]);
@@ -71,11 +65,10 @@
 
             @auth
                 @if ($peraturan->is_public || $userHasAccess || auth()->id() === $peraturan->created_by)
-                    <a href="{{ route('peraturan.download.token', ['token' => $token]) }}"
-                      class="btn btn-primary d-inline-flex align-items-center">
-                        <i class="bi bi-download me-2"></i>
-                        Download PDF
-                    </a>
+                  <div class="course-info d-flex justify-content-between align-items-center">
+                    <h5>Download File</h5>
+                    <p><a href="{{ route('peraturan.download.token', ['token' => $token]) }}">Download</a></p>
+                  </div>
                 @else
                     <div class="alert alert-warning mt-2">
                         Dokumen ini berbayar. Silakan daftarkan <a href="{{ route('layanan.index') }}">Layanan</a> untuk mengaksesnya. 

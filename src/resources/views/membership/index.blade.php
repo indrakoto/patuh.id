@@ -25,13 +25,7 @@
                     <h3>{{$plan->name}}</h3>
                     <h4>{!! $price !!}<span> / year</span></h4>
                     {!! $plan->description !!}
-                    <div class="btn-wrap">
-                    <form action="{{ route('payment.checkout') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="membership_plan_id" value="{{ $plan->id }}">
-                        <button type="submit" class="btn btn-success w-100">Daftarkan</button>
-                    </form>                        
-                    </div>
+                    <a href="{{ route('payment.checkout', $plan->id) }}" class="btn btn-primary">Checkout</a>
                 </div>
             </div>
             @endforeach

@@ -9,7 +9,9 @@ use App\Http\Controllers\PeraturanController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PaymentController;
-
+use App\Http\Controllers\PaymentWebhookController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DashboardController;
 use App\Models\Document;
 use App\Models\News;
 
@@ -19,11 +21,9 @@ Route::get('/', function () {
     return view('welcome', compact('latestNews'));
 });
 
-//Route::get('/news', function () {
-//    //$latestDocuments = Document::latest()->take(4)->get(); 
-//    $latestNews = News::latest()->take(4)->get();  
-//    return view('welcome', compact('latestNews'));
-//});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 Route::prefix('news')->group(function() {
     // Display all knowledge
@@ -105,13 +105,17 @@ Route::prefix('peraturan')->group(function () {
 // 🔐 Route Terproteksi (Hanya untuk User Login)
 Route::middleware(['auth'])->prefix('peraturan')->group(function () {
     // Baca dokumen menggunakan token terenkripsi (lebih aman)
-    Route::get('/baca-token/{token}', [PeraturanController::class, 'showByToken'])->name('peraturan.show.token');
+    //Route::get('/baca-token/{token}', [PeraturanController::class, 'showByToken'])->name('peraturan.show.token');
+    Route::get('/baca/{token}', [PeraturanController::class, 'showByToken'])->name('peraturan.show.token');
 
     // Download dokumen via ID langsung (opsional, bisa di-nonaktifkan)
-    Route::get('/download/{slug}/{id}', [PeraturanController::class, 'download'])->name('peraturan.download');
+    //Route::get('/download/{slug}/{id}', [PeraturanController::class, 'download'])->name('peraturan.download');
 
     // Download via token terenkripsi (disarankan)
-    Route::get('/download-token/{token}', [PeraturanController::class, 'downloadByToken'])->name('peraturan.download.token');
+    Route::get('/download/{token}', [PeraturanController::class, 'downloadByToken'])
+        ->name('peraturan.download.token');
+    //Route::get('/download-token/{token}', [PeraturanController::class, 'downloadByToken'])
+    //    ->name('peraturan.download.token');
 });
 
 // Layanan Routes
@@ -120,24 +124,16 @@ Route::prefix('layanan')->group(function () {
     Route::get('/', [LayananController::class, 'index'])->name('layanan.index');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/membership/index', [MembershipController::class, 'index'])->name('membership.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
     Route::get('/membership/plans', [MembershipController::class, 'plans'])->name('membership.plans');
-    Route::post('/membership/purchase/{planId}', [MembershipController::class, 'purchase'])->name('membership.purchase');
     
-    // Payment routes
-    Route::post('/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
-    Route::get('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
-});
-
-// Midtrans webhook
-Route::post('/payment/notification', [PaymentController::class, 'handleNotification']);
-
-// routes/web.php
-Route::get('/midtrans-config', function() {
-    return response()->json([
-        'server_key' => config('services.midtrans.server_key'),
-        'client_key' => config('services.midtrans.client_key'),
-        'is_production' => config('services.midtrans.is_production')
-    ]);
+    // Checkout GET - show Midtrans Snap popup
+    Route::get('/checkout/{plan}', [PaymentController::class, 'checkout'])->name('payment.checkout');
+    //Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+    
+    Route::get('/payment/finish', [PaymentController::class, 'finish'])->name('payment.finish');
+    Route::get('/payment/unfinish', [PaymentController::class, 'unfinish'])->name('payment.unfinish');
+    Route::get('/payment/error', [PaymentController::class, 'error'])->name('payment.error');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });

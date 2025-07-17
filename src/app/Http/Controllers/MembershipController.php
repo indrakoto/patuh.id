@@ -7,6 +7,7 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Services\MidtransService;
+use Midtrans\Snap;
 
 class MembershipController extends Controller
 {
@@ -21,6 +22,5 @@ class MembershipController extends Controller
         $plans = MembershipPlan::all();
         return view('membership.plans', compact('plans'));
     }
-
 }
 

@@ -1,44 +1,32 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\MembershipPlan;
 use App\Models\Payment;
-use App\Services\MidtransService;
-use Illuminate\Http\Request;
+use Midtrans\Snap;
+use Midtrans\Config;
 use Illuminate\Support\Str;
 
 class PaymentController extends Controller
 {
-    protected $midtransService;
-
-    public function __construct(MidtransService $midtransService)
+    public function checkout($planId)
     {
-        $this->midtransService = $midtransService;
-    }
-
-    public function checkout(Request $request)
-    {
-        $request->validate([
-            'membership_plan_id' => 'required|exists:membership_plans,id'
-        ]);
-
-        $plan = MembershipPlan::findOrFail($request->membership_plan_id);
+        $plan = MembershipPlan::findOrFail($planId);
         $user = auth()->user();
 
-        // Buat payment record
-        $payment = Payment::create([
-            'membership_plan_id' => $plan->id,
-            'order_id' => 'MEMB-' . time() . '-' . Str::random(4),
-            'price' => $plan->price,
-            'payment_status' => Payment::STATUS_PENDING
-        ]);
+        // Midtrans config
+        Config::$serverKey = config('services.midtrans.server_key');
+        Config::$isProduction = config('services.midtrans.is_production');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
 
-        // Siapkan parameter untuk Midtrans
+        $orderId = 'ORDER-' . strtoupper(Str::random(10));
+
         $params = [
             'transaction_details' => [
-                'order_id' => $payment->order_id,
-                'gross_amount' => $payment->price,
+                'order_id' => $orderId,
+                'gross_amount' => $plan->price,
             ],
             'customer_details' => [
                 'first_name' => $user->name,
@@ -49,65 +37,33 @@ class PaymentController extends Controller
                     'id' => $plan->id,
                     'price' => $plan->price,
                     'quantity' => 1,
-                    'name' => $plan->name . ' Membership',
+                    'name' => $plan->name
                 ]
+            ],
+            'callbacks' => [
+                'finish' => route('payment.finish'),
+                'unfinish' => route('payment.unfinish'),
+                'error' => route('payment.error'),
             ],
         ];
 
-        try {
-            $snapResponse = $this->midtransService->createTransaction($params);
-            
-            $payment->update([
-                'payment_url' => $snapResponse->redirect_url
-            ]);
+        $snapToken = Snap::getSnapToken($params);
 
-            return redirect($snapResponse->redirect_url);
-        } catch (\Exception $e) {
-            return back()->with('error', 'Payment gateway error: ' . $e->getMessage());
-        }
+        return view('payment.checkout', compact('snapToken', 'plan'));
     }
 
-    public function handleNotification(Request $request)
+    public function finish(Request $request)
     {
-        $notification = $this->midtransService->handleNotification();
-
-        // Cari payment berdasarkan order_id
-        $payment = Payment::where('order_id', $notification->order_id)->firstOrFail();
-
-        // Simpan log notifikasi
-        $payment->logs()->create([
-            'event_type' => $notification->transaction_status,
-            'payload' => $notification
-        ]);
-
-        // Update status payment
-        $status = $notification->transaction_status;
-        $fraud = $notification->fraud_status;
-
-        if ($status == 'capture') {
-            if ($fraud == 'challenge') {
-                $payment->payment_status = Payment::STATUS_PENDING;
-            } else if ($fraud == 'accept') {
-                $payment->payment_status = Payment::STATUS_SUCCESS;
-            }
-        } else if ($status == 'settlement') {
-            $payment->payment_status = Payment::STATUS_SUCCESS;
-        } else if ($status == 'cancel' || $status == 'deny' || $status == 'expire') {
-            $payment->payment_status = Payment::STATUS_FAILED;
-        } else if ($status == 'pending') {
-            $payment->payment_status = Payment::STATUS_PENDING;
-        }
-
-        $payment->save();
-
-        return response()->json(['status' => 'success']);
+        return view('payment.status', ['status' => 'Sukses']);
     }
 
-    public function paymentCallback(Request $request)
+    public function unfinish(Request $request)
     {
-        $orderId = $request->order_id;
-        $payment = Payment::where('order_id', $orderId)->firstOrFail();
+        return view('payment.status', ['status' => 'Tidak Selesai']);
+    }
 
-        return view('payment.callback', compact('payment'));
+    public function error(Request $request)
+    {
+        return view('payment.status', ['status' => 'Gagal']);
     }
 }
