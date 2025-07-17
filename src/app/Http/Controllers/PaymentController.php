@@ -30,7 +30,7 @@ class PaymentController extends Controller
             'user_id' => $user->id,
             'membership_plan_id' => $plan->id,
             'order_id' => $orderId,
-            'amount' => $plan->price,
+            'price' => $plan->price,
             'payment_status' => 'pending',
         ]);
 
