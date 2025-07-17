@@ -17,6 +17,7 @@ class Payment extends Model
     const STATUS_CANCELLED = 'cancelled';
     
     protected $fillable = [
+        'user_id',
         'membership_plan_id',
         'order_id',
         'price',
@@ -64,6 +65,11 @@ class Payment extends Model
     public function getFormattedPriceAttribute(): string
     {
         return 'Rp ' . number_format($this->price, 0, ',', '.');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }

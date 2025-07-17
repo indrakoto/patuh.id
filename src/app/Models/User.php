@@ -55,7 +55,7 @@ class User extends Authenticatable
     /**
      * Get active membership
      */
-    public function activeMembership(): HasOne
+    public function activeMembership()
     {
         return $this->hasOne(UserMembership::class)->where('is_active', true);
     }
@@ -63,7 +63,7 @@ class User extends Authenticatable
     /**
      * Get all payments
      */
-    public function payments(): HasMany
+    public function payments()
     {
         return $this->hasMany(Payment::class);
     }
