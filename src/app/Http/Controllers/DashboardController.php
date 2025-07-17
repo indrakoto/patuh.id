@@ -17,6 +17,6 @@ class DashboardController extends Controller
             ->where('is_active', true)
             ->first();
 
-        return view('user.dashboard', compact('user', 'activeMembership'));
+        return view('membership.dashboard', compact('user', 'activeMembership'));
     }
 }
