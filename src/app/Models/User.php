@@ -57,7 +57,11 @@ class User extends Authenticatable
      */
     public function activeMembership()
     {
-        return $this->hasOne(UserMembership::class)->where('is_active', true);
+        return $this->memberships()
+            ->where('is_active', true)
+            ->where('start_date', '<=', now())
+            ->where('end_date', '>=', now())
+            ->latest('start_date');
     }
 
     /**
@@ -68,4 +72,12 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    public function hasActiveMembership(): bool
+    {
+        return $this->memberships()
+            ->where('is_active', true)
+            ->where('start_date', '<=', now())
+            ->where('end_date', '>=', now())
+            ->exists();
+    }
 }

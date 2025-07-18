@@ -64,7 +64,7 @@
             @endphp
 
             @auth
-                @if ($peraturan->is_public || $userHasAccess || auth()->id() === $peraturan->created_by)
+                @if ($userHasAccess)
                   <div class="course-info d-flex justify-content-between align-items-center">
                     <h5>Download File</h5>
                     <p><a href="{{ route('peraturan.download.token', ['token' => $token]) }}">Download</a></p>

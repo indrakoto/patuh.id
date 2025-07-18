@@ -105,17 +105,13 @@ Route::prefix('peraturan')->group(function () {
 // 🔐 Route Terproteksi (Hanya untuk User Login)
 Route::middleware(['auth'])->prefix('peraturan')->group(function () {
     // Baca dokumen menggunakan token terenkripsi (lebih aman)
-    //Route::get('/baca-token/{token}', [PeraturanController::class, 'showByToken'])->name('peraturan.show.token');
     Route::get('/baca/{token}', [PeraturanController::class, 'showByToken'])->name('peraturan.show.token');
 
-    // Download dokumen via ID langsung (opsional, bisa di-nonaktifkan)
-    //Route::get('/download/{slug}/{id}', [PeraturanController::class, 'download'])->name('peraturan.download');
 
     // Download via token terenkripsi (disarankan)
     Route::get('/download/{token}', [PeraturanController::class, 'downloadByToken'])
         ->name('peraturan.download.token');
-    //Route::get('/download-token/{token}', [PeraturanController::class, 'downloadByToken'])
-    //    ->name('peraturan.download.token');
+
 });
 
 // Layanan Routes
@@ -137,3 +133,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/error', [PaymentController::class, 'error'])->name('payment.error');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+
+Route::middleware('auth')->post('/membership/basic/activate', [MembershipController::class, 'activateBasic'])->name('membership.basic.activate');

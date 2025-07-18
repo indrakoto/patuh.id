@@ -34,21 +34,27 @@ class PeraturanController extends Controller
 
     public function show($slug, $id_peraturan)
     {
-        if (!auth()->check()) {
-            return redirect()->route('login')->with([
-                'warning' => 'Silakan login untuk membaca peraturan',
-                'redirectAfterLogin' => url()->current(),
-            ]);
-        }
+        //if (!auth()->check()) {
+        //    return redirect()->route('login')->with([
+        //        'warning' => 'Silakan login untuk membaca peraturan',
+        //        'redirectAfterLogin' => url()->current(),
+        //    ]);
+        //}
 
         $peraturan = Document::where('id', $id_peraturan)
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Akses tetap dicek untuk tampilkan tombol download saja
-        $userHasAccess = $peraturan->is_public
-            || $peraturan->created_by == auth()->id();
+        $userHasAccess = false;
 
+        if (auth()->check()) {
+            $user = auth()->user();
+
+            $userHasAccess = $peraturan->is_public
+                || $peraturan->created_by === $user->id
+                || $user->hasActiveMembership(); // dari model User
+        }
+        
         return view('peraturan.show', [
             'peraturan' => $peraturan,
             'userHasAccess' => $userHasAccess,
